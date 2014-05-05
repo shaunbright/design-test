@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <script src="flights.js"></script>
+    <link rel="stylesheet" href="css.css">
+  </head>
+  <body>
+  	<header>
+  		<img src="logo.svg" height="80" width="80" />
+  	</header>
+  	<section>
+  		<div id="top">The distance between</div>
+      <div id="middle">
+    		<span class="choice" id="first" href="#">
+          <div>JFK</div>
+          <ul class="dropdown" id="list1">
+              <li>JFK</li>
+              <li>LAX</li>
+              <li>LAS</li>
+              <li>PDX</li>
+            </ul>
+        </span>
+    		<span id="ampersand">&</span>
+    		<span class="choice" id="second" href="#">
+          <div>PDX</div>
+          <ul class="dropdown" id="list2">
+              <li>JFK</li>
+              <li>LAX</li>
+              <li>LAS</li>
+              <li>PDX</li>
+            </ul>
+        </span>
+      </div>
+  		<div id="end">is <span id="miles">2475</span> miles!</div>
+      
+      
+  	</section>
+  	<footer></footer>
+  </body>
+  <script>
+  	"use strict";
+	//alert(IntentMedia.Distances.distance_between_airports("JFK","LAX")+" miles!");
+    var dropped1, dropped2=false;
+    var dd1 = document.querySelector("#first");
+    var dd2 = document.querySelector("#second");
+
+    var label1=document.querySelector("#first div");
+    var label2=document.querySelector("#second div");
+
+    var list1 = document.getElementById("list1");
+    var list2 = document.getElementById("list2");
+
+    var options1=document.querySelectorAll("#list1 li");
+    var options2=document.querySelectorAll("#list2 li");
+
+    var miles=document.querySelector("#miles");
+
+    for(var i=0;i<options1.length;i++)
+    {
+      options1[i].onmousedown=function(){selectThis(1,this)};
+    }
+    for(var i=0;i<options2.length;i++)
+    {
+      options2[i].onmousedown=function(){selectThis(2,this)};
+    }
+
+    dd1.onmousedown = dropDown;
+    dd2.onmousedown = dropDown;
+
+
+    function selectThis(num,target){
+      if(num==1){
+        label1.innerHTML=target.innerHTML;
+      }
+      
+      if(num==2){
+        label2.innerHTML=target.innerHTML;
+      }
+      update();
+    }
+
+    function dropDown(){
+      if(this==dd1){
+        if(!dropped1){
+          list1.style.display = 'block';
+          dd1.setAttribute('style','background-color:#0b161b');
+          dd1.style.color="#37484f";
+          dropped1=true;
+        }
+        else{
+          list1.style.display='none';
+          dd1.setAttribute('style','background-color:#3f768e;');
+          dd1.style.color="#ffffff";
+          dropped1=false;
+        }
+      }
+      if(this==dd2){
+        if(!dropped2){
+          list2.style.display = 'block';
+          dd2.setAttribute('style','background-color:#0b161b');
+          dd2.style.color="#37484f";
+          dropped2=true;
+        }
+        else{
+          list2.style.display='none';
+          dd2.setAttribute('style','background-color:#3f768e;');
+          dd2.style.color="#ffffff";
+          dropped2=false;
+        }
+      }
+    }
+
+    function update(){
+      miles.innerHTML=IntentMedia.Distances.distance_between_airports(label1.innerHTML,label2.innerHTML);
+    }
+
+  </script>
+</html>
